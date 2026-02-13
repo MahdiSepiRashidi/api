@@ -94,5 +94,4 @@ async def chat_completion(request: analysisRequest):
     }
 
 if __name__ == "__main__":
-    nest_asyncio.apply()
     uvicorn.run(app, host="0.0.0.0", port=8000)
