@@ -55,17 +55,18 @@ async def chat_completion(request: analysisRequest):
     ]
     
     # Use Unsloth's built-in chat template handling
-    inputs = tokenizer.apply_chat_template(
+    prompt = tokenizer.apply_chat_template(
         messages,
         tokenize=False,
         add_generation_prompt=True,  # Critical: adds assistant start token
         enable_thinking=True
         
     )
+    inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
 
     print("waiting to get the answer from model!...")
     outputs = model.generate(
-        inputs,
+        **inputs,
         max_new_tokens=4096,
         temperature=0.6,    # Qwen3 recommendation for reasoning
         top_p=0.9,
