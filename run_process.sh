@@ -7,5 +7,6 @@ pip install uv
 apt-get update
 apt-get install -y tmux
 
+
 # Run the process using tmux in a detached session
 tmux new-session -d -s my_process 'uv run main.py'
