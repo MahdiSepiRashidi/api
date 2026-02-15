@@ -87,14 +87,17 @@ async def chat_completion(request: analysisRequest):
 
     # Clean up whitespace (optional but recommended)
     causes_list = [cause.strip() for cause in causes_list]
-    
-    return {
+    output = {
         "question_metadata": request.question_metadata,
         "question": request.question,
         "organization_answer": request.organization_answer,
         "answer_score": score,
         "root_causes": causes_list
     }
+
+    print(output)
+    
+    return output
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
