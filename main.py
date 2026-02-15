@@ -92,7 +92,8 @@ async def chat_completion(request: analysisRequest):
         "question": request.question,
         "organization_answer": request.organization_answer,
         "answer_score": score,
-        "root_causes": causes_list
+        "root_causes": causes_list,
+        "raw_output" : full_output
     }
 
     print(output)
