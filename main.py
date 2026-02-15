@@ -76,14 +76,15 @@ async def chat_completion(request: analysisRequest):
         eos_token_id=tokenizer.eos_token_id,
     )
     
-    # Decode only the new tokens (skip input prompt)
-    full_output = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    match = re.search(r"<score>(.*?)</score>", full_output, re.DOTALL)
+# Decode only the new (assistant) tokens, excluding the input prompt
+    generated_tokens = outputs[0][inputs['input_ids'].shape[1]:]  # Slice from input length
+    assistant_response = tokenizer.decode(generated_tokens, skip_special_tokens=True)
+    match = re.search(r"<score>(.*?)</score>", assistant_response, re.DOTALL)
     if match:
         score = match.group(1).strip()
     else:
         score = "Error: not provided by model"
-    causes_list = re.findall(r"<cause>(.*?)</cause>", full_output, re.DOTALL)
+    causes_list = re.findall(r"<cause>(.*?)</cause>", assistant_response, re.DOTALL)
 
     # Clean up whitespace (optional but recommended)
     causes_list = [cause.strip() for cause in causes_list]
