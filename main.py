@@ -94,7 +94,7 @@ async def chat_completion(request: analysisRequest):
         "organization_answer": request.organization_answer,
         "answer_score": score,
         "root_causes": causes_list,
-        "raw_output" : full_output
+        "raw_output" : assistant_response
     }
 
     print(output)
